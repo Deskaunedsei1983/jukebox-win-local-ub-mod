@@ -1,5 +1,20 @@
 **Status:** Archive (code is provided as-is, no updates expected)
 
+# Jukebox-Win(dows)-local
+This repo is a fork of Jukebox that is designed to run on a local Windows Jupyter environment that can be connected with a Google Colab notebook by Zags (From the [Jukebox Community Discord](https://discord.gg/stTq4nqeqS)) that was modified by me. The guide to use it can be found below.
+
+
+## Windows Prerequisites:
+### NOTE: This notebook was modified for a Windows 10 environment with python3.9+ and CUDA 11.0+ installed.
+- Look around in the notebook ([![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zenforic/jukebox-win-local/blob/master/ZenZags_Main_4_53.ipynb)) and change Shadow to your username on windows and/or change the path(s) you want to use.
+- **NOTE: This step is NOT required if using the repo within a pip command in a notebook, or the notebook in this repo!** The pip install section of the 1st step were commented out with trial/error comments I made to myself. To install the required packages run the following in your preferred environment: `pip install --no-deps -r requirements.txt` and get the requirements.txt from discord as well. you may also use `pip install --user` or install in a virtualenv.
+- doing an install of the requirements.txt will give you everything you need to start using colab with a local jupyter isntance (it will also install jupyter if you don't have it). find out more about how to set up colab to work with jupyter here: https://research.google.com/colaboratory/local-runtimes.html
+-  ~~Make sure you have downloaded the modified openjukebox files from the jukebox community discord (if using windows)~~ All crossed out steps are only needed if not using this fork.
+-  ~~Install them by navigating to a dist/site-packages folder and replacing the files matching the directory tree~~
+-  ~~example path: 'C:\\Users\\Shadow\\AppData\\Roaming\\Python\\Python39\\site-packages' find site paths: `python -m `~~
+- You need at *least* a 16GB VRAM GPU (e.g. RTX 3090, v100, p100, etc.) to run this locally, make sure you have a GPU with this capability! You also need at least 20 or so GB of usable disk space! (this may be an overestimate, but trust me that's good!)
+
+
 # Jukebox
 Code for "Jukebox: A Generative Model for Music"
 
