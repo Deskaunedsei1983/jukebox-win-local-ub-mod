@@ -1,4 +1,6 @@
 import torch.distributed as dist
+import torch.cuda as cda
+import torch
 from enum import Enum
 
 class ReduceOp(Enum):
@@ -16,7 +18,7 @@ class ReduceOp(Enum):
         }[self]
 
 def is_available():
-    return dist.is_available()
+    return dist.is_available() and cda.device_count() > 1
 
 def get_rank():
     if is_available():
@@ -56,9 +58,9 @@ def broadcast(tensor, src):
         return _broadcast(tensor, src)
     #else: do nothing
 
-def init_process_group(backend, init_method):
+def init_process_group(backend, init_method, rank, world_size):
     if is_available():
-        return _init_process_group(backend, init_method)
+        return _init_process_group(backend, init_method, rank, world_size)
     #else: do nothing
 
 def _get_rank():
@@ -82,5 +84,6 @@ def _reduce(tensor, dst, op):
 def _broadcast(tensor, src):
     return dist.broadcast(tensor, src)
 
-def _init_process_group(backend, init_method):
-    return dist.init_process_group(backend, init_method)
+def _init_process_group(backend, init_method, rank, world_size):
+    return dist.init_process_group(backend=backend, init_method=init_method,
+                                   rank=rank, world_size=world_size)

@@ -1,13 +1,12 @@
 import sys
 import subprocess
+import urllib.request
 
 def download(remote_path, local_path, async_download=False):
     args = ['wget', '-O', local_path, remote_path]
     print("Running ", " ".join(args))
-    if async_download:
-        subprocess.Popen(args)
-    else:
-        subprocess.call(args)
+    print("OVERRIDE: Running urllib.request.urlretrieve instead for Windows")
+    urllib.request.urlretrieve(remote_path, local_path)
 
 # GCE
 def gs_download(gs_path, local_path, async_download=False):

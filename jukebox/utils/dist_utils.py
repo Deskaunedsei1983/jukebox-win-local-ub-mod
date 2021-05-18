@@ -42,7 +42,7 @@ def allgather_lists(xs):
 def setup_dist_from_mpi(
     master_addr="127.0.0.1", backend="nccl", port=29500, n_attempts=5, verbose=False
 ):
-    if dist.is_available():
+    if dist.is_available() and torch.cuda.device_count() > 1:
         return _setup_dist_from_mpi(master_addr, backend, port, n_attempts, verbose)
     else:
         use_cuda = torch.cuda.is_available()
@@ -63,13 +63,15 @@ def _setup_dist_from_mpi(master_addr, backend, port, n_attempts, verbose):
     mpi_size = MPI.COMM_WORLD.Get_size()
 
 
-    os.environ["RANK"] = str(mpi_rank)
-    os.environ["WORLD_SIZE"] = str(mpi_size)
-    os.environ["MASTER_ADDR"] = master_addr
-    os.environ["MASTER_PORT"] = str(port)
-    os.environ["NCCL_LL_THRESHOLD"] = "0"
-    os.environ["NCCL_NSOCKS_PERTHREAD"] = "2"
-    os.environ["NCCL_SOCKET_NTHREADS"] = "8"
+   # os.environ["RANK"] = str(mpi_rank)
+   # os.environ["WORLD_SIZE"] = str(mpi_size)
+   # os.environ["MASTER_ADDR"] = master_addr
+   # os.environ["MASTER_PORT"] = str(port)
+   # os.environ["NCCL_LL_THRESHOLD"] = "0"
+   # os.environ["NCCL_NSOCKS_PERTHREAD"] = "2"
+   # os.environ["NCCL_SOCKET_NTHREADS"] = "8"
+    initport = str(port)
+   # st_mpi_rank = str(mpi_rank)
 
     # Pin this rank to a specific GPU on the node
     local_rank = mpi_rank % 8
@@ -83,7 +85,8 @@ def _setup_dist_from_mpi(master_addr, backend, port, n_attempts, verbose):
     # We guard against the failure and then retry
     for attempt_idx in range(n_attempts):
         try:
-            dist.init_process_group(backend=backend, init_method=f"env://")
+            dist.init_process_group(backend=backend, init_method=f"file:///C:/Users/Shadow/Desktop/deletewhendone.withjukebox",
+                                    rank=mpi_rank, world_size=mpi_size)
             assert dist.get_rank() == mpi_rank
 
             use_cuda = torch.cuda.is_available()
