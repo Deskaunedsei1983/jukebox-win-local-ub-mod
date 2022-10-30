@@ -16,7 +16,7 @@ This repo is a fork of Jukebox that is designed to run on a local Windows Jupyte
 -  ~~example path: 'C:\\Users\\Shadow\\AppData\\Roaming\\Python\\Python39\\site-packages' find site paths: `python -m `~~
 - You need at *least* a 16GB VRAM GPU (e.g. RTX 3090, v100, p100, etc.) to run this locally, make sure you have a GPU with this capability! You also need at least 20 or so GB of usable disk space! (this may be an overestimate, but trust me that's good!)
 
-
+## == Everything under here is from the original jukebox repo, do not use these for Windows instructions! == ##
 # Jukebox
 Code for "Jukebox: A Generative Model for Music"
 
